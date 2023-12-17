@@ -36,6 +36,8 @@ Penguin feeding
 Evening bbq
 500 Rs
 
+<h2>Modules</h2>
+
 The program will cover 5 main modules :  
 
 Module 1 : Displaying the options
