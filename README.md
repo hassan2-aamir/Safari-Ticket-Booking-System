@@ -44,13 +44,16 @@ Module 1 : Displaying the options
 It will display all the options and prices for the 12 hour tickets and the 24 hour tickets. It will also show the extra options ie. lion feeding etc.
 
 Module 2 : Making the booking
-It will take input the tickets and extra attractions required and the calculate the total cost. It will also allocate a booking number. After taking the input it will ask for confirmation by displaying booking number and booking details. 
+It will take input the tickets and extra attractions required and the calculate the total cost. It will also allocate a booking number. After taking the input it will ask for confirmation by displaying booking number and booking details. It will check that the booking made has the best value and offer a better alternative if it is available after the booking. It will store the ticket booking in a file that is used to or all the tickets booked for a particular date.
+ 
+Module 3: Displaying the bookings made for a date.
+It will access the file and display all the bookings for that date.
 
-Module 3 : Ensuring best value for money
-It will check that the booking made has the best value and offer a better alternative if it is available. 
+Module 4: Deleting a booking
+It will take the date and booking number and delete it from the specific file. 
 
-Module 4: Recommending deals after taking budget into account
-It will take budget and number of people as an input from the user and will output combinations of tickets and extra attractions that could be afforded by the user.
+Module 5: Summary of bookings on a date
+It will take a file and calculate total bookings of each type on that day. It will also tell the total money earned for that day.
 
-Module 5: Creating a menu to access options
+Module 6: Creating a menu to access options
 This will create a menu that will allow users to navigate to options ie. See ticket options, Make a booking, Explore deals.
