@@ -1,220 +1,298 @@
-#pragma warning (disable:4996)
-
+#pragma warning(disable: 4996)  // Disable the safety warning for using certain functions
 
 #include <stdio.h>
 #include <cstring>
 #include <ctype.h>
+#include <stdlib.h>
+#include <time.h>
 
-void Validator(int* valPtr, int lower, int upper);
+void Validator(int* valPtr, int lower, int upper);  // Function prototype for input validation
 
-int ticketCounter[8];
+int ticketCounter[8];  // Array to keep track of the total number of each type of ticket booked
 
-//It will take inputs
-void InputTickets(int i, int* ticketTypePtr, int* ticketNumberPtr, char* dayNightPtr) {
+// Function to take inputs for booking tickets
+void InputTickets(int i, int* ticketTypePtr, int* ticketNumberPtr, char* dayNightPtr, int isFirst) {
 
-	printf("Enter the number of the type of ticket you wish to book:  ");
-	scanf("%d", ticketTypePtr + i);
-	Validator(ticketTypePtr + i,1,8);
+    printf("Enter the number of the type of ticket you wish to book:\n\n");
+    scanf("%d", ticketTypePtr + i);
 
-	printf("Enter the quantity of tickets you wish to book.You can book 50 at one time or 10 family tickets at one time.");
-	scanf("%d", ticketNumberPtr + i);
+    // Validate the ticket type input
 
-	for (int a = 0; a <= 8; a++) {
-		ticketCounter[a] = 0;
-	}
+    if (isFirst == 1) {
+        Validator(ticketTypePtr + i, 1, 5);
+    }  
+    else {
+        Validator(ticketTypePtr + i, 6, 8);
+    }
 
-	if (*(ticketTypePtr + i) == 5) {
-		Validator(ticketNumberPtr + i, 6, 50);
-	}
-	else if (*(ticketTypePtr + i) == 4) {
-		Validator(ticketNumberPtr + i, 1, 10);
-	}
-	else {
-		Validator(ticketNumberPtr + i, 1, 50);
-	}
+    printf("\nEnter the quantity of tickets you wish to book. You can book 50 at one time or 10 family tickets at one time:\n\n");
+    scanf("%d", ticketNumberPtr + i);
 
-	*(ticketCounter + *(ticketTypePtr + i) - 1) += *(ticketNumberPtr + i);
+    for (int a = 0; a < 8; a++) {
+        ticketCounter[a] = 0;  // Initialize ticketCounter array
+    }
 
-	if (*(ticketTypePtr+i) > 0 && *(ticketTypePtr + i) < 6) {
-		int hourType;
-		printf("Enter type of ticket\n1 for 12 hour\n2 for 24 hour\n  ");
-		scanf("%d", &hourType);
-		Validator(&hourType, 1, 2);
-		if (hourType == 1) {
-			*(dayNightPtr + i) = 'D';
+    // Special handling for family and 6+ people tickets
+    if (*(ticketTypePtr + i) == 5) {
+        Validator(ticketNumberPtr + i, 6, 50);
+    }
+    else if (*(ticketTypePtr + i) == 4) {
+        Validator(ticketNumberPtr + i, 1, 10);
+    }
+    else {
+        Validator(ticketNumberPtr + i, 1, 50);
+    }
 
-		}
-		else{
-			*(dayNightPtr + i) = 'N';
-		}
+    // Update ticketCounter array with the booked ticket quantity
+    *(ticketCounter + *(ticketTypePtr + i) - 1) += *(ticketNumberPtr + i);
 
-	}
-	else {
-		*(dayNightPtr + i) = '-';
-	}
-
-
+    // For certain ticket types, ask for the type of ticket (12-hour or 24-hour)
+    if (*(ticketTypePtr + i) > 0 && *(ticketTypePtr + i) < 6) {
+        int hourType;
+        printf("\nEnter type of ticket\n1 for 12-hour\n2 for 24-hour\n  ");
+        scanf("%d", &hourType);
+        Validator(&hourType, 1, 2);
+        if (hourType == 1) {
+            *(dayNightPtr + i) = '1';
+        }
+        else {
+            *(dayNightPtr + i) = '2';
+        }
+    }
+    else {
+        *(dayNightPtr + i) = '-';
+    }
 }
 
-//It will evaluate the total cost of each item
+// Function to calculate the total cost of each item
 void CalculateTotal(int i, int ticketTypes[], int ticketNumbers[], int ticketPrice[8][2], int* TotalPtr, char dayNight[]) {
+    int j = 0;
 
-	int j=0;
+    // For certain ticket types, determine if it's day or night
+    if (ticketTypes[i] > 0 && ticketTypes[i] < 6) {
+        if (dayNight[i] == '1') {
+            j = 0;
+        }
+        else {
+            j = 1;
+        }
+    }
 
-	if (ticketTypes[i] > 0 && ticketTypes[i] < 6) {
-		if (dayNight[i] == 'D') {
-			j = 0;
-		}
-		else {
-			j = 1;
-		}
-	}
-
-	*(TotalPtr + i) = ticketPrice[ticketTypes[i] - 1][j] * ticketNumbers[i];
-
+    // Calculate the total cost based on ticket type, quantity, and time
+    *(TotalPtr + i) = ticketPrice[ticketTypes[i] - 1][j] * ticketNumbers[i];
 }
 
-//It will display the bpoking done
-void DisplayBooking(int length, int ticketTypes[], int ticketNumbers[],char dayNight[], int ticketTotals[],int BookinNo) {
-	int sum = 0;
-	printf("Booking Number:  %d\n",BookinNo);
-	printf("Sno.\tTicket Type\tNumber\tDay/Night\tTotal\n");
-	printf("----------------------------------------------------------------------------------------------------\n");
-	for (int i = 0; i < length; i++) {
+// Function to display the booking details
+void DisplayBooking(int length, int ticketTypes[], int ticketNumbers[], char dayNight[], int ticketTotals[], int BookinNo) {
+    int sum = 0;
+    printf("\n\nBooking Number:  %d\n", BookinNo);
+    printf("Sno.\tTicket Type\tNumber\t12/24\tTotal\n");
+    printf("----------------------------------------------------------------------------------------------------\n");
+    for (int i = 0; i < length; i++) {
+        printf("%d.\t", i + 1);
+        switch (ticketTypes[i]) {
+        case 1:
+            printf("Adult\t");
+            break;
+        case 2:
+            printf("Child\t");
+            break;
+        case 3:
+            printf("Senior\t");
+            break;
+        case 4:
+            printf("Family\t");
+            break;
+        case 5:
+            printf("6+ people");
+            break;
+        case 6:
+            printf("Lion feeding ");
+            break;
+        case 7:
+            printf("Peng feeding");
+            break;
+        case 8:
+            printf("Evening bbq ");
+            break;
+        }
 
-		printf("%d.\t", i + 1);
-		switch (ticketTypes[i]) {
-		case 1:
-			printf("Adult\t");
-			break;
-		case 2:
-			printf("Child\t");
-			break;
-		case 3:
-			printf("Senior\t");
-			break;
-		case 4:
-			printf("Family\t");
-			break;
-		case 5:
-			printf("6+ people");
-			break;
-		case 6:
-			printf("Lion feeding ");
-			break;
-		case 7:
-			printf("Peng feeding");
-			break;
-		case 8:
-			printf("Evening bbq ");
-			break;
-		}
+        printf("\t%d\t", ticketNumbers[i]);
 
+        // Check for '1' and '2' in dayNight and display corresponding strings
+        if (dayNight[i] == '1') {
+            printf("12\t\t");
+        }
+        else if (dayNight[i] == '2') {
+            printf("24\t\t");
+        }
 
+        printf("%d\n", ticketTotals[i]);
 
-		printf("\t%d\t%c\t\t%d\n", ticketNumbers[i],dayNight[i], ticketTotals[i]);
+        sum += ticketTotals[i];
+    }
 
-		sum += ticketTotals[i];
-
-
-
-
-
-
-
-
-	}
-
-	printf("\t\t\t\t\t\t%d", sum);
+    printf("\t\t\t\t\t\t%d", sum);
 }
 
-//It will show if there are any better options
+
+
+// Function to suggest better booking options
 void EnsureBestBooking(int length, int ticketTypes[], int ticketNumbers[]) {
-	
-	int totalIndividualTickets = 0;
-		for (int i = 0; i < 8; i++) {
-			totalIndividualTickets += ticketCounter[i];
-	}
+    int totalIndividualTickets = 0;
+    for (int i = 0; i < 8; i++) {
+        totalIndividualTickets += ticketCounter[i];
+    }
 
-	if(totalIndividualTickets >= 6){
-		printf("You can buy type 5 ticket and avail 6+ people discount\n");
-	}
-	if ((ticketCounter[0] >= 2 || ticketCounter[2] >= 2) && (ticketCounter[1] >= 3)) {
-		printf("You can buy type 4 family ticket and get better value.\n");
-	}
+    // Suggest type 5 ticket for groups of 6 or more
+    if (totalIndividualTickets >= 6) {
+        printf("\nYou can buy type 5 ticket and avail 6+ people discount\n");
+    }
+
+    // Suggest type 4 family ticket for specific combinations of individual tickets
+    if ((ticketCounter[0] + ticketCounter[2] >= 2) && (ticketCounter[3] >= 3)) {
+        printf("\nYou can buy type 4 family ticket and get better value.\n");
+    }
 }
 
-//It will take input the tickets and extra attractions required and the calculate the total cost. It will also allocate a booking number. After taking the input it will ask for confirmation by displaying booking number and booking details. 
+
+
+
+// Function to store booking details in a file
+void StoreBookingDetails(int BookingNumber, int ticketTypes[], int ticketNumbers[], char dayNight[], int ticketTotals[], int length) {
+    FILE* file;
+    char filename[20]; // Assuming the date format is YYYYMMDD and adding .txt
+    char date[9];
+
+    printf("Enter the date (DDMMYYYY): ");
+    getchar();
+    scanf("%8s", date);
+
+    snprintf(filename, sizeof(filename), "%s.txt", date);
+
+    // Open the file in append mode or create a new file if it doesn't exist
+    file = fopen(filename, "a");
+
+    if (file == NULL) {
+        printf("Error opening file %s\n", filename);
+        return;
+    }
+
+    // Write booking details to the file
+    fprintf(file, "Booking Number: %d\n", BookingNumber);
+    fprintf(file, "Sno.\tTicket Type\tNumber\tDay/Night\tTotal\n");
+    fprintf(file, "----------------------------------------------------------------------------------------------------\n");
+
+    for (int i = 0; i < length; i++) {
+        fprintf(file, "%d.\t", i + 1);
+        switch (ticketTypes[i]) {
+        case 1:
+            fprintf(file, "Adult\t");
+            break;
+        case 2:
+            fprintf(file, "Child\t");
+            break;
+        case 3:
+            fprintf(file, "Senior\t");
+            break;
+        case 4:
+            fprintf(file, "Family\t");
+            break;
+        case 5:
+            fprintf(file, "6+ people");
+            break;
+        case 6:
+            fprintf(file, "Lion feeding ");
+            break;
+        case 7:
+            fprintf(file, "Peng feeding");
+            break;
+        case 8:
+            fprintf(file, "Evening bbq ");
+            break;
+        }
+
+        fprintf(file, "\t%d\t%c\t\t%d\n", ticketNumbers[i], dayNight[i], ticketTotals[i]);
+    }
+
+    fprintf(file, "\n");
+
+    // Close the file
+    fclose(file);
+
+    printf("Booking details have been successfully stored in %s\n", filename);
+}
+
+
+// Function to book tickets and handle the entire booking process
 void bookTickets(int BookingNumber) {
+    int ticketPrice[8][2] = {
+        {2000, 3000},
+        {1000, 2000},
+        {1500, 2500},
+        {6000, 9000},
+        {1000, 2000},
+        {250, 0},
+        {200, 0},
+        {500, 0}
+    };
 
-	int ticketPrice[8][2] = {
-		{2000,3000},
-		{1000,2000},
-		{1500,2500},
-		{6000,9000},
-		{1000,2000},
-		{250,0},
-		{200,0},
-		{500,0}
-	};
+    int ticketTypes[50];
+    int ticketNumbers[50];
+    char dayNight[50];
+    int ticketTotals[50];
 
-	int ticketTypes[50];
-	int ticketNumbers[50];
-	char dayNight[50];
-	int ticketTotals[50];
+    int confirm = 0;
+    while (confirm == 0) {
+        int i = 0;
+        char choice = 'y';
+        while (choice == 'y') {
+            printf("\n\nInput your main tickets from serial number 1 to 5:\n  ");
+            InputTickets(i, ticketTypes, ticketNumbers, dayNight,1);
+            CalculateTotal(i, ticketTypes, ticketNumbers, ticketPrice, ticketTotals, dayNight);
 
-	int confirm = 0;
-	while ( confirm ==0) {
-		int i = 0;
-		char choice = 'y';
-		while (choice == 'y') {
+            i++;
 
-			printf("\n\nInput your main tickets from serial number 1 to 5\n  ");
-			InputTickets(i, ticketTypes, ticketNumbers, dayNight);
-			CalculateTotal(i, ticketTypes, ticketNumbers, ticketPrice, ticketTotals, dayNight);
+            printf("\n\nDo you want to add more things to the cart? Enter y to do so, else enter any other value:\n");
+            getchar();
+            scanf("%c", &choice);
 
-			i++;
+            choice = tolower(choice);
+        }
 
-			printf("Do you want to add more things to the cart?Enter y to do so.");
-			scanf(" %c", &choice);
+        printf("Do you want to add additional activities? Enter y to do so.");
+        getchar();
+        scanf("%c", &choice);
+        tolower(choice);
 
-			choice = tolower(choice);
+        while (choice == 'y') {
+            printf("\n\nInput your additional tickets from serial number 6 to 8:\n");
+            InputTickets(i, ticketTypes, ticketNumbers, dayNight,0);
+            CalculateTotal(i, ticketTypes, ticketNumbers, ticketPrice, ticketTotals, dayNight);
 
+            i++;
 
-		}
+            printf("\n\nDo you want to add more additional activities to the cart ? Enter y to do so:\n");
+            getchar();
+            scanf("%c", &choice);
 
-		printf("Do you want to add additional activities.Enter y to do so.");
-		scanf(" %c", &choice);
-		choice = tolower(choice);
+            choice = tolower(choice);
+        }
 
-		while (choice == 'y') {
+        printf("\n-------------------------------------------------------------------------------------------\n");
+        printf("\nYour booking summary.\n\n");
+        DisplayBooking(i, ticketTypes, ticketNumbers, dayNight, ticketTotals, BookingNumber);
+        printf("\n\n");
+        EnsureBestBooking(i, ticketTypes, ticketNumbers);
 
-			printf("Input your additional tickets from serial number 6 to 8\n");
-			InputTickets(i, ticketTypes, ticketNumbers, dayNight);
-			CalculateTotal(i, ticketTypes, ticketNumbers, ticketPrice, ticketTotals, dayNight);
+        printf("\n\nDo you confirm your booking?\nPress 1 to proceed. Press 0 to make a different booking:\n");
+        scanf("%d", &confirm);
+        Validator(&confirm, 0, 1);
 
-			i++;
-
-			printf("Do you want to add more additional activities to the cart? Enter y to do so. ");
-			scanf(" %c", &choice);
-
-			choice = tolower(choice);
-
-		}
-
-		printf("\n-------------------------------------------------------------------------------------------\n");
-		printf("\nYour booking summary.\n\n");
-		DisplayBooking(i, ticketTypes, ticketNumbers, dayNight, ticketTotals, BookingNumber);
-		printf("\n\n");
-		EnsureBestBooking(i, ticketTypes, ticketNumbers);
-
-		printf("\n\nDo you confirm your booking.\nPress 1 to proceed. Press 0 to make different booking. ");
-		scanf("%d", &confirm);
-		Validator(&confirm, 0, 1);
-
-	}
-	printf("\nYour ticket has been booked successfully.Thank you for your patience.");
-
-
+        if (confirm == 1) {
+            // Assuming 'date' is a string containing the current date in the format YYYYMMDD
+            StoreBookingDetails(BookingNumber, ticketTypes, ticketNumbers, dayNight, ticketTotals, i);
+        }
+    }
+    printf("\n\nYour ticket has been booked successfully. Thank you for your patience.\n");
 }
-

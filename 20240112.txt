@@ -1,0 +1,7 @@
+Booking Number: 1
+Sno.	Ticket Type	Number	Day/Night	Total
+----------------------------------------------------------------------------------------------------
+1.	Senior		1	N		2500
+2.	Lion feeding 	1	-		250
+3.	Evening bbq 	1	-		500
+
