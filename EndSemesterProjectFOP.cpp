@@ -14,6 +14,21 @@ int main()
 	int n = 1,date;
 	int option;
 
+	printf("\033[1m");  // Enable BOLD text
+
+	// head using ASCII art
+	printf("\n\n");
+	printf("        |||\n");
+	printf("        / \\__                       ***    *    *****   *    *****  *****                 /\\_/\\                \n");
+	printf("        (    @\\___                 *      * *   *      * *   *   *    *                  /     \\              \n");   
+	printf("        /         O                 **   *****  ***   *****  *****    *                  ( o.o )               \n");
+	printf("        /   (_____/                   *  *   *  *     *   *  *  *     *                    |||                   \n");
+	printf("    /_____/       U                ****  *   *  *     *   *  *   *  *****                 > ^ <               \n\n");
+
+	printf("\033[0m\n\n");  // Disable BOLD text
+
+	
+
 	printf("Welcome to the safari booking system.\nEnter the date today(DDMMYYYY):\n");
 	scanf("%d", &date);
 
@@ -22,9 +37,22 @@ int main()
 	for (;;) {
 		system("CLS");
 		
+		printf("\033[1m");  // Enable BOLD text
+
+		// head using ASCII art
+		printf("\n\n");
+		printf("        |||\n");
+		printf("        / \\__                       ***    *    *****   *    *****  *****                 /\\_/\\                \n");
+		printf("        (    @\\___                 *      * *   *      * *   *   *    *                  /     \\              \n");
+		printf("        /         O                 **   *****  ***   *****  *****    *                  ( o.o )               \n");
+		printf("        /   (_____/                   *  *   *  *     *   *  *  *     *                    |||                   \n");
+		printf("    /_____/       U                ****  *   *  *     *   *  *   *  *****                 > ^ <               \n\n");
+
+		printf("\033[0m\n\n");  // Disable BOLD text
+
 
 		
-		printf("\n------------------------------------------------\n");
+		printf("\n------------------------------------------------\n\n\n");
 		printf("How can I help you today? Enter a number to indicate your choice.\n\n");
 		printf("1. Book a ticket\n");
 		printf("2. See bookings on a certain date\n");
