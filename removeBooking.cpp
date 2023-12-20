@@ -1,32 +1,41 @@
-#pragma warning(disable:4996)
+// Disable the warning for using certain functions
+#pragma warning(disable: 4996)
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
+// Function to remove a booking from a file
 void removeBooking() {
     FILE* fptr, * fptr2;
     int bookingNo;
     char date[10] = "", filename[32], bookingNoString[20] = "", input[1024];
 
+    // Input the booking number to be deleted
     printf("\n\nEnter the booking number to delete:\n");
     scanf("%d", &bookingNo);
 
-    printf("\n\nEnter the date booking was made for:\n");
-    getchar();
+    // Input the date of the booking
+    printf("\n\nEnter the date the booking was made for:\n");
+    getchar();  // Consume the newline character left by the previous input
     gets_s(date, 9);
 
+    // Construct the filename based on the date
     snprintf(filename, sizeof(filename), "%s.txt", date);
 
+    // Open the original file for reading
     fptr = fopen(filename, "r");
     if (fptr == NULL) {
+        // Handle the case where the file cannot be opened
         printf("\n\nError opening file %s. Either the file does not exist or there was an issue.\n", filename);
         return;
     }
 
+    // Open a temporary file for writing
     fptr2 = fopen("temp.txt", "w");
     if (fptr2 == NULL) {
+        // Handle the case where the temporary file cannot be opened
         printf("\n\nError opening file for writing. Either the file does not exist or there was an issue.\n");
         fclose(fptr);
         return;
@@ -35,22 +44,24 @@ void removeBooking() {
     // Flag to indicate whether the current line is part of the booking to be removed
     int isInBooking = 0;
 
+    // Loop through each line in the original file
     while (fgets(input, sizeof(input), fptr)) {
-        // Check the length of the line before accessing its characters
-        if (strlen(input) >= 21 && input[21] == '\n') {
-            for (int i = 12, j = 0; i < 21; i++, j++) {
-                bookingNoString[j] = input[i];
-            }
+        // Check if the line contains the booking number
+        char* bookingNumberStart = strstr(input, "Booking Number: ");
+        if (bookingNumberStart != NULL) {
+            // Extract the booking number from the line
+            int extractedBookingNo;
+            sscanf(bookingNumberStart + 16, "%d", &extractedBookingNo);
 
-            if (atoi(bookingNoString) == bookingNo) {
+            // Check if the extracted booking number matches the target booking number
+            if (extractedBookingNo == bookingNo) {
                 // If this line contains the booking number, set the flag
                 isInBooking = 1;
             }
         }
 
-
+        // If the line is not part of the booking to be removed, write it to the temporary file
         if (!isInBooking) {
-            // If not in the booking to be removed, write the line to the temporary file
             fputs(input, fptr2);
         }
 
@@ -61,11 +72,16 @@ void removeBooking() {
         }
     }
 
+    // Close the files
     fclose(fptr);
     fclose(fptr2);
 
+    // Remove the original file
     remove(filename);
+
+    // Rename the temporary file to the original filename
     rename("temp.txt", filename);
 
+    // Display a success message
     printf("\n\nBooking %d has been removed successfully.\n", bookingNo);
 }
