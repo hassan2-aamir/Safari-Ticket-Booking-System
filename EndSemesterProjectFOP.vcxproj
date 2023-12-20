@@ -131,6 +131,7 @@
     <ClCompile Include="displayFile.cpp" />
     <ClCompile Include="EndSemesterProjectFOP.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="removeBooking.cpp" />
     <ClCompile Include="Summary.cpp" />
     <ClCompile Include="Validator.cpp" />
   </ItemGroup>

@@ -6,6 +6,7 @@ void bookTickets(int BookingNumber);
 void DisplayBookingFileContents();
 void Validator(int* valPtr, int lower, int upper);
 void SummaryBookingFileContents();
+void removeBooking();
 
 int main()
 {
@@ -27,7 +28,8 @@ int main()
 		printf("How can I help you today? Enter a number to indicate your choice.\n\n");
 		printf("1. Book a ticket\n");
 		printf("2. See bookings on a certain date\n");
-		printf("3. Get a summary for a certain date\n");
+		printf("3. Delete a booking\n");
+		printf("4. Get a summary for a certain date\n");
 		printf("0. Exit\n\n");
 		
 		scanf("%d", &option);
@@ -42,6 +44,9 @@ int main()
 			DisplayBookingFileContents();
 			break;
 		case(3):
+			removeBooking();
+			break;
+		case(4):
 			SummaryBookingFileContents();
 			break;
 		default:

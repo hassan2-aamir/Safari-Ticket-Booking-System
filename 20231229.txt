@@ -1,7 +1,0 @@
-Booking Number: 1
-Sno.	Ticket Type	Number	Day/Night	Total
-----------------------------------------------------------------------------------------------------
-1.	Adult		20	N		60000
-2.	Child		5	N		10000
-3.	Peng feeding	5	-		1000
-
