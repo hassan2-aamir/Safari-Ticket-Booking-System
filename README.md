@@ -38,7 +38,7 @@ Evening bbq
 
 <h2>Modules</h2>
 
-The program will cover 5 main modules :  
+The program will cover 6 main modules :  
 
 Module 1 : Displaying the options
 It will display all the options and prices for the 12 hour tickets and the 24 hour tickets. It will also show the extra options ie. lion feeding etc.
