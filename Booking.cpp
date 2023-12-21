@@ -223,7 +223,6 @@ void StoreBookingDetails(int BookingNumber, int ticketTypes[], int ticketNumbers
     printf("Booking details have been successfully stored in %s\n", filename);
 }
 
-
 // Function to book tickets and handle the entire booking process
 void bookTickets(int BookingNumber) {
     int ticketPrice[8][2] = {
@@ -237,21 +236,34 @@ void bookTickets(int BookingNumber) {
         {500, 0}
     };
 
-    int ticketTypes[50];
-    int ticketNumbers[50];
-    char dayNight[50];
-    int ticketTotals[50];
+    int* ticketTypes;
+    int* ticketNumbers;
+    char* dayNight;
+    int* ticketTotals;
 
     int confirm = 0;
     while (confirm == 0) {
         int i = 0;
         char choice = 'y';
+
+        // Dynamically allocate memory for arrays
+        ticketTypes = (int*)malloc(sizeof(int));
+        ticketNumbers = (int*)malloc(sizeof(int));
+        dayNight = (char*)malloc(sizeof(char));
+        ticketTotals = (int*)malloc(sizeof(int));
+
         while (choice == 'y') {
             printf("\n\nInput your main tickets from serial number 1 to 5:\n  ");
-            InputTickets(i, ticketTypes, ticketNumbers, dayNight,1);
+            InputTickets(i, ticketTypes, ticketNumbers, dayNight, 1);
             CalculateTotal(i, ticketTypes, ticketNumbers, ticketPrice, ticketTotals, dayNight);
 
             i++;
+
+            // Dynamically reallocate memory for arrays
+            ticketTypes = (int*)realloc(ticketTypes, (i + 1) * sizeof(int));
+            ticketNumbers = (int*)realloc(ticketNumbers, (i + 1) * sizeof(int));
+            dayNight = (char*)realloc(dayNight, (i + 1) * sizeof(char));
+            ticketTotals = (int*)realloc(ticketTotals, (i + 1) * sizeof(int));
 
             printf("\n\nDo you want to add more things to the cart? Enter y to do so, else enter any other value:\n");
             getchar();
@@ -267,12 +279,18 @@ void bookTickets(int BookingNumber) {
 
         while (choice == 'y') {
             printf("\n\nInput your additional tickets from serial number 6 to 8:\n");
-            InputTickets(i, ticketTypes, ticketNumbers, dayNight,0);
+            InputTickets(i, ticketTypes, ticketNumbers, dayNight, 0);
             CalculateTotal(i, ticketTypes, ticketNumbers, ticketPrice, ticketTotals, dayNight);
 
             i++;
 
-            printf("\n\nDo you want to add more additional activities to the cart ? Enter y to do so:\n");
+            // Dynamically reallocate memory for arrays
+            ticketTypes = (int*)realloc(ticketTypes, (i + 1) * sizeof(int));
+            ticketNumbers = (int*)realloc(ticketNumbers, (i + 1) * sizeof(int));
+            dayNight = (char*)realloc(dayNight, (i + 1) * sizeof(char));
+            ticketTotals = (int*)realloc(ticketTotals, (i + 1) * sizeof(int));
+
+            printf("\n\nDo you want to add more additional activities to the cart? Enter y to do so:\n");
             getchar();
             scanf("%c", &choice);
 
@@ -293,6 +311,13 @@ void bookTickets(int BookingNumber) {
             // Assuming 'date' is a string containing the current date in the format YYYYMMDD
             StoreBookingDetails(BookingNumber, ticketTypes, ticketNumbers, dayNight, ticketTotals, i);
         }
+
+        // Free dynamically allocated memory
+        free(ticketTypes);
+        free(ticketNumbers);
+        free(dayNight);
+        free(ticketTotals);
     }
+
     printf("\n\nYour ticket has been booked successfully. Thank you for your patience.\n");
 }

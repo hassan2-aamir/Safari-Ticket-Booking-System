@@ -7,6 +7,8 @@ void DisplayBookingFileContents();
 void Validator(int* valPtr, int lower, int upper);
 void SummaryBookingFileContents();
 void removeBooking();
+void displayMenu();
+void getSummary();
 
 int main()
 {
@@ -14,19 +16,19 @@ int main()
 	int n = 1,date;
 	int option;
 
-	printf("\033[1m");  // Enable BOLD text
+	
 
 	// head using ASCII art
 	printf("\n\n");
-	printf("        |||\n");
-	printf("        / \\__                       ***    *    *****   *    *****  *****                 /\\_/\\                \n");
-	printf("        (    @\\___                 *      * *   *      * *   *   *    *                  /     \\              \n");   
-	printf("        /         O                 **   *****  ***   *****  *****    *                  ( o.o )               \n");
-	printf("        /   (_____/                   *  *   *  *     *   *  *  *     *                    |||                   \n");
-	printf("    /_____/       U                ****  *   *  *     *   *  *   *  *****                 > ^ <               \n\n");
+	printf("        |||                --------------------------------------------------------\n");
+	printf("        / \\__              |         ***    *    *****   *    *****  *****        |         /\\_/\\                \n");
+	printf("        (    @\\___         |        *      * *   *      * *   *   *    *          |        /     \\              \n");   
+	printf("        /         O        |         **   *****  ***   *****  *****    *          |        ( o.o )               \n");
+	printf("        /   (_____/        |           *  *   *  *     *   *  *  *     *          |          |||                   \n");
+	printf("    /_____/       U        |        ****  *   *  *     *   *  *   *  *****        |         > ^ <               \n");
+	printf("                           --------------------------------------------------------\n\n");
 
-	printf("\033[0m\n\n");  // Disable BOLD text
-
+	
 	
 
 	printf("Welcome to the safari booking system.\nEnter the date today(DDMMYYYY):\n");
@@ -37,7 +39,7 @@ int main()
 	for (;;) {
 		system("CLS");
 		
-		printf("\033[1m");  // Enable BOLD text
+		
 
 		// head using ASCII art
 		printf("\n\n");
@@ -48,8 +50,7 @@ int main()
 		printf("        /   (_____/                   *  *   *  *     *   *  *  *     *                    |||                   \n");
 		printf("    /_____/       U                ****  *   *  *     *   *  *   *  *****                 > ^ <               \n\n");
 
-		printf("\033[0m\n\n");  // Disable BOLD text
-
+		
 
 		
 		printf("\n------------------------------------------------\n\n\n");
@@ -61,10 +62,11 @@ int main()
 		printf("0. Exit\n\n");
 		
 		scanf("%d", &option);
-		Validator(&option, 0, 3);
+		Validator(&option, 0, 4);
 
 		switch (option) {
 		case(1):
+			displayMenu();
 			bookTickets(n);
 			n++;
 			break;
@@ -75,7 +77,7 @@ int main()
 			removeBooking();
 			break;
 		case(4):
-			SummaryBookingFileContents();
+			getSummary();
 			break;
 		default:
 			break;

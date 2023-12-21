@@ -130,9 +130,9 @@
     <ClCompile Include="Booking.cpp" />
     <ClCompile Include="displayFile.cpp" />
     <ClCompile Include="EndSemesterProjectFOP.cpp" />
+    <ClCompile Include="getSummary.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="removeBooking.cpp" />
-    <ClCompile Include="Summary.cpp" />
     <ClCompile Include="Validator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

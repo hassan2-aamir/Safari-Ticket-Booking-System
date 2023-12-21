@@ -30,10 +30,10 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Summary.cpp">
+    <ClCompile Include="removeBooking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="removeBooking.cpp">
+    <ClCompile Include="getSummary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
