@@ -136,7 +136,7 @@ void DisplayBooking(int length, int ticketTypes[], int ticketNumbers[], char day
 // Function to suggest better booking options
 void EnsureBestBooking(int length, int ticketTypes[], int ticketNumbers[]) {
     int totalIndividualTickets = 0;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 3; i++) {
         totalIndividualTickets += ticketCounter[i];
     }
 
@@ -146,7 +146,7 @@ void EnsureBestBooking(int length, int ticketTypes[], int ticketNumbers[]) {
     }
 
     // Suggest type 4 family ticket for specific combinations of individual tickets
-    if ((ticketCounter[0] + ticketCounter[2] >= 2) && (ticketCounter[3] >= 3)) {
+    if ((ticketCounter[0] + ticketCounter[1] >= 2) && (ticketCounter[2] >= 3)) {
         printf("\nYou can buy type 4 family ticket and get better value.\n");
     }
 }
