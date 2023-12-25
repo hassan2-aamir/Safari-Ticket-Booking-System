@@ -4,11 +4,10 @@
 #include <cstring>
 #include <ctype.h>
 #include <stdlib.h>
-#include <time.h>
 
 void Validator(int* valPtr, int lower, int upper);  // Function prototype for input validation
 
-int ticketCounter[8];  // Array to keep track of the total number of each type of ticket booked
+int ticketCounter[8] = {0,0,0,0,0,0,0,0};  // Array to keep track of the total number of each type of ticket booked
 
 // Function to take inputs for booking tickets
 void InputTickets(int i, int* ticketTypePtr, int* ticketNumberPtr, char* dayNightPtr, int isFirst) {
@@ -28,9 +27,6 @@ void InputTickets(int i, int* ticketTypePtr, int* ticketNumberPtr, char* dayNigh
     printf("\nEnter the quantity of tickets you wish to book. You can book 50 at one time or 10 family tickets at one time:\n\n");
     scanf("%d", ticketNumberPtr + i);
 
-    for (int a = 0; a < 8; a++) {
-        ticketCounter[a] = 0;  // Initialize ticketCounter array
-    }
 
     // Special handling for family and 6+ people tickets
     if (*(ticketTypePtr + i) == 5) {
@@ -70,10 +66,7 @@ void CalculateTotal(int i, int ticketTypes[], int ticketNumbers[], int ticketPri
 
     // For certain ticket types, determine if it's day or night
     if (ticketTypes[i] > 0 && ticketTypes[i] < 6) {
-        if (dayNight[i] == '1') {
-            j = 0;
-        }
-        else {
+        if (dayNight[i] == '2') {
             j = 1;
         }
     }
@@ -121,10 +114,13 @@ void DisplayBooking(int length, int ticketTypes[], int ticketNumbers[], char day
 
         // Check for '1' and '2' in dayNight and display corresponding strings
         if (dayNight[i] == '1') {
-            printf("12\t\t");
+            printf("12\t");
         }
         else if (dayNight[i] == '2') {
-            printf("24\t\t");
+            printf("24\t");
+        }
+        else {
+            printf("--\t");
         }
 
         printf("%d\n", ticketTotals[i]);
@@ -132,7 +128,7 @@ void DisplayBooking(int length, int ticketTypes[], int ticketNumbers[], char day
         sum += ticketTotals[i];
     }
 
-    printf("\t\t\t\t\t\t%d", sum);
+    printf("\t\t\t\t\t%d", sum);
 }
 
 
@@ -163,8 +159,9 @@ void StoreBookingDetails(int BookingNumber, int ticketTypes[], int ticketNumbers
     FILE* file;
     char filename[20]; // Assuming the date format is YYYYMMDD and adding .txt
     char date[9];
+    int sum = 0;
 
-    printf("Enter the date (DDMMYYYY): ");
+    printf("Enter the date you want to make the booking for (DDMMYYYY): ");
     getchar();
     scanf("%8s", date);
 
@@ -180,11 +177,11 @@ void StoreBookingDetails(int BookingNumber, int ticketTypes[], int ticketNumbers
 
     // Write booking details to the file
     fprintf(file, "Booking Number: %d\n", BookingNumber);
-    fprintf(file, "Sno.\tTicket Type\tNumber\tDay/Night\tTotal\n");
+    fprintf(file, "Sno.\tTicket Type\tNumber\t12/24\tTotal\n");
     fprintf(file, "----------------------------------------------------------------------------------------------------\n");
 
     for (int i = 0; i < length; i++) {
-        fprintf(file, "%d.\t", i + 1);
+        fprintf(file, "%d\t", i + 1);
         switch (ticketTypes[i]) {
         case 1:
             fprintf(file, "Adult\t");
@@ -199,23 +196,39 @@ void StoreBookingDetails(int BookingNumber, int ticketTypes[], int ticketNumbers
             fprintf(file, "Family\t");
             break;
         case 5:
-            fprintf(file, "6+ people");
+            fprintf(file, "6+_people");
             break;
         case 6:
-            fprintf(file, "Lion feeding ");
+            fprintf(file, "Lion_feeding ");
             break;
         case 7:
-            fprintf(file, "Peng feeding");
+            fprintf(file, "Peng_feeding");
             break;
         case 8:
-            fprintf(file, "Evening bbq ");
+            fprintf(file, "Evening_bbq");
             break;
         }
 
-        fprintf(file, "\t%d\t%c\t\t%d\n", ticketNumbers[i], dayNight[i], ticketTotals[i]);
+        fprintf(file, "\t%d\t", ticketNumbers[i]);
+
+        switch (dayNight[i]) {
+        case('1'):
+            fprintf(file, "12\t");
+            break;
+        case('2'):
+            fprintf(file, "24\t");
+            break;
+        default:
+            fprintf(file, "--\t");
+            break;
+        }
+
+        fprintf(file, "%d\n", ticketTotals[i]);
+
+        sum += ticketTotals[i];
     }
 
-    fprintf(file, "\n");
+    fprintf(file,"\n\t\t\t\t\t%d\n\n", sum);
 
     // Close the file
     fclose(file);

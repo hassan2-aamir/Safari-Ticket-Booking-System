@@ -1,6 +1,7 @@
 #pragma warning(disable:4996)
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void bookTickets(int BookingNumber);
 void DisplayBookingFileContents();
@@ -43,12 +44,13 @@ int main()
 
 		// head using ASCII art
 		printf("\n\n");
-		printf("        |||\n");
-		printf("        / \\__                       ***    *    *****   *    *****  *****                 /\\_/\\                \n");
-		printf("        (    @\\___                 *      * *   *      * *   *   *    *                  /     \\              \n");
-		printf("        /         O                 **   *****  ***   *****  *****    *                  ( o.o )               \n");
-		printf("        /   (_____/                   *  *   *  *     *   *  *  *     *                    |||                   \n");
-		printf("    /_____/       U                ****  *   *  *     *   *  *   *  *****                 > ^ <               \n\n");
+		printf("        |||                --------------------------------------------------------\n");
+		printf("        / \\__              |         ***    *    *****   *    *****  *****        |         /\\_/\\                \n");
+		printf("        (    @\\___         |        *      * *   *      * *   *   *    *          |        /     \\              \n");
+		printf("        /         O        |         **   *****  ***   *****  *****    *          |        ( o.o )               \n");
+		printf("        /   (_____/        |           *  *   *  *     *   *  *  *     *          |          |||                   \n");
+		printf("    /_____/       U        |        ****  *   *  *     *   *  *   *  *****        |         > ^ <               \n");
+		printf("                           --------------------------------------------------------\n\n");
 
 		
 
