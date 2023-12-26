@@ -15,26 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EndSemesterProjectFOP.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Booking.cpp">
+    <ClCompile Include="EndSemesterProjectFOP%28main%29.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Validator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="displayFile.cpp">
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Menu.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
+    </ClInclude>
+    <ClInclude Include="Booking.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="removeBooking.cpp">
+    </ClInclude>
+    <ClInclude Include="displayFile.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="getSummary.cpp">
+    </ClInclude>
+    <ClInclude Include="removeBooking.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="getSummary.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
