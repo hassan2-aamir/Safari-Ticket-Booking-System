@@ -1,3 +1,2 @@
 ﻿  EndSemesterProjectFOP(main).cpp
-C:\Users\hp\source\repos\EndSemesterProjectFOP\getSummary.h(19,57): warning C4101: 'hourtype': unreferenced local variable
   EndSemesterProjectFOP.vcxproj -> C:\Users\hp\source\repos\EndSemesterProjectFOP\x64\Debug\EndSemesterProjectFOP.exe

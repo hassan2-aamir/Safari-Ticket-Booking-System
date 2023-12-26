@@ -227,12 +227,12 @@ void StoreBookingDetails(int BookingNumber, int ticketTypes[], int ticketNumbers
             break;
         }
 
-        fprintf(file, "%d", ticketTotals[i]);
+        fprintf(file, "%d\n", ticketTotals[i]);
 
         sum += ticketTotals[i];
     }
 
-    fprintf(file, "\n\t\t\t\t\t%d\n\n", sum);
+    fprintf(file, "\t\t\t\t\t%d\n\n", sum);
 
     // Close the file
     fclose(file);
